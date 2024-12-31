@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/hackathon_card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp"
+    app:cardBackgroundColor="@color/gray"
+    android:orientation="horizontal"
+    app:cardUseCompatPadding="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="Bookmark"
+                android:clickable="true"
+                android:layout_marginStart="325dp"
+                app:srcCompat="@drawable/ic_bookmark" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/hackathon_name_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hackathon Name"
+                android:textAlignment="center"
+                android:layout_marginEnd="10dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp">
+
+            <FrameLayout
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="2dp"
+                android:background="@drawable/button_rounded"
+                android:layout_marginEnd="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/hackathon_date_card"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Date: 28th December, 2024"
+                        android:layout_weight="1"
+                        android:textAlignment="center"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </FrameLayout>
+            <FrameLayout
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="2dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_rounded">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/hackathon_venue_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Location: Mumbai"
+                        android:textAlignment="center"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/hackathon_banner_card"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:srcCompat="@drawable/banner_hackathon"
+                android:scaleType="centerCrop"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/hackathon_upvote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 UPVOTES"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/hackathon_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 COMMENTS"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+
+            android:id="@+id/hackathon_comment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            app:cornerRadius="10dp"
+            android:drawableLeft="@drawable/ic_upvote"
+            android:text="Upvote"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/TechBlue"/>
+
+
+
+
+        <Button
+            android:id="@+id/hackathon_share_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            app:cornerRadius="10dp"
+            android:drawableLeft="@drawable/ic_share"
+            android:text="Share"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/TechBlue"/>
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <Button
+                android:id="@+id/hackathon_register_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                app:cornerRadius="10dp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/TechBlue"
+                android:drawableLeft="@drawable/ic_register"
+                android:text="Register"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <Button
+                android:id="@+id/hackathon_comment_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                app:cornerRadius="10dp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/TechBlue"
+                android:drawableLeft="@drawable/ic_comment"
+                android:text="Comment"/>
+            <Button
+                android:id="@+id/hackathon_know_more_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/TechBlue"
+                android:drawableLeft="@drawable/ic_info"
+                app:cornerRadius="10dp"
+                android:textStyle="bold"
+                android:text="Know More"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

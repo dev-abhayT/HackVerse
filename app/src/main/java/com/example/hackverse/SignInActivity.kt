@@ -21,7 +21,7 @@ class SignInActivity : AppCompatActivity() {
         val currentUser : FirebaseUser? =firebaseAuth.currentUser
         if (currentUser !=null)
         {
-            startActivity(Intent(this,HomeActivity::class.java))
+            startActivity(Intent(this,ScreenMainActivity::class.java))
             this.finish()
         }
     }
@@ -47,7 +47,7 @@ class SignInActivity : AppCompatActivity() {
                 firebaseAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(this, "Sign In Successful!", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, HomeActivity::class.java)
+                        val intent = Intent(this, ScreenMainActivity::class.java)
                         startActivity(intent)
                         this.finish()
                     } else
@@ -57,7 +57,7 @@ class SignInActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                 }
-                }
+            }
             else{
                 Toast.makeText(this, "No Empty Fields Allowed!", Toast.LENGTH_SHORT).show()
             }

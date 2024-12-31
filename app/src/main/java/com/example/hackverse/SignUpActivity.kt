@@ -51,10 +51,10 @@ class SignUpActivity : AppCompatActivity() {
                 } else
                     Toast.makeText(this, "No Empty Fields Allowed!", Toast.LENGTH_SHORT).show()
             }
-            }
-
-            }
         }
+
+    }
+}
 
 
 

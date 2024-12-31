@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    android:padding="5dp"
+
+    android:id="@+id/comment_box"
+    >
+    <RelativeLayout
+        android:id="@+id/item_comment_long_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whitishGray"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/comment_user_pic"
+            android:scaleType="centerCrop"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="2dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/default_picture" />
+
+
+        <TextView
+            android:id="@+id/comment_user_name"
+            android:text="Mr.Imperfect"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/comment_user_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_text"
+            android:layout_below="@id/comment_user_name"
+            android:layout_marginTop="6sp"
+            android:textSize="16sp"
+            android:gravity="start"
+            android:text="Some Bullshit."
+            android:layout_toRightOf="@id/comment_user_pic"
+            android:layout_margin="2dp"
+
+            />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
