@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    style="@style/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,18 +34,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SET UP YOUR PROFILE!"
+
             android:layout_marginBottom="20dp"
             android:textAlignment="center"
             android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            style="@style/textView"/>
 
         <ImageView
             android:id="@+id/profile_picture"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:layout_marginBottom="10dp"
             android:scaleType="fitCenter"
-            tools:srcCompat="@tools:sample/avatars"
+            app:srcCompat="@drawable/default_picture"
+
             android:contentDescription="Profile Picture"
              />
 
@@ -54,7 +57,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            style="@style/SignInText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_field"
@@ -68,13 +72,16 @@
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            style="@style/SignInText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/contact_number_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contact Number" />
+                android:inputType="number"
+                android:hint="Contact Number"
+                android:maxLength="10"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +89,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            style="@style/SignInText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/url_field"
@@ -96,7 +104,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            style="@style/SignInText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userID"

@@ -19,7 +19,12 @@
         <item
             android:id="@+id/item_my"
             android:icon="@drawable/ic_my_hackathons"
-            android:title="My Hackathons" />
+            android:title="Registered Hackathons"
+            />
+        <item
+            android:id="@+id/item_my_creations"
+            android:title="Created Hackathons"
+            android:icon="@drawable/ic_created"/>
 
 
     </group>
@@ -28,7 +33,7 @@
         android:title="">
         <menu>
             <item
-                android:id="@+id/nav_logout"
+                android:id="@+id/item_logout"
                 android:icon="@drawable/ic_log_out"
                 android:title="Logout" />
         </menu>

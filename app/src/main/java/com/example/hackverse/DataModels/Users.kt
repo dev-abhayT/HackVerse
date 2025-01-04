@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -7,23 +8,29 @@ data class Users(
     val pfpUrl: String = "",
     val userID: String = "",
     val userEmail: String = "",
-    val isProfileComplete: Boolean = false
+
+
 ) : Parcelable {
 
+    @SuppressLint("NewApi")
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
-        parcel.readString().toString()
+        parcel.readString().toString(),
+
+
     )
 
+    @SuppressLint("NewApi")
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeString(userNumber)
         parcel.writeString(pfpUrl)
         parcel.writeString(userID)
         parcel.writeString(userEmail)
+
     }
 
     override fun describeContents(): Int {

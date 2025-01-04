@@ -26,6 +26,23 @@
         <activity android:name=".ProfileActivity"/>
         <activity android:name=".ScreenMainActivity"/>
         <activity android:name=".CreateHackathon"/>
+        <activity android:name="KnowMoreActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Deep link format -->
+                <data
+                    android:scheme="hackverse"
+                    android:host="hackathon"
+                    android:pathPrefix="/details" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ActivityComment"/>
+
     </application>
 
 </manifest>

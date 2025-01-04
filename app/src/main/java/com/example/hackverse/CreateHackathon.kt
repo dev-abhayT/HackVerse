@@ -77,60 +77,34 @@ class CreateHackathon : AppCompatActivity() {
                 Toast.makeText(this, "Hackathon Date Cannot be Null!", Toast.LENGTH_SHORT).show()
             }
             else if(banner.isEmpty() || details.isEmpty()){
-                if(banner.isEmpty() && details.isEmpty()){
-                    showConfirmationDialog(true, true)
-                    fetchUserDetailsandSave(name,venue,date,banner,details,hackID)
-                }
-                else if (banner.isEmpty() && details.isNotEmpty()){
-                    showConfirmationDialog(true, false)
-                    fetchUserDetailsandSave(name,venue,date,banner,details,hackID)
-                }
-                else{
-                    showConfirmationDialog(false, true)
-                    fetchUserDetailsandSave(name,venue,date,banner,details,hackID)
-                }
+                showConfirmationDialog()
+
             }
             else{
                 fetchUserDetailsandSave(name,venue,date,banner,details,hackID)
             }
         }
 
-        if(binding.hackathonName.text.toString().isNotEmpty()) {
-            binding.hackathonDate.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+        binding.hackathonName.addTextChangedListener(createTextWatcher())
+        binding.hackathonDate.addTextChangedListener(createTextWatcher())
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable?) {
-                    createHackathonID(binding.hackathonName.text.toString(), binding.hackathonDate.text.toString(), binding.hackathonUniqueId)
-                }
+    }
 
-            })
+    private fun createTextWatcher(): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val name = binding.hackathonName.text.toString().trim()
+                val contact = binding.hackathonDate.text.toString().trim()
+
+                if (name.isNotEmpty() && contact.isNotEmpty()) {
+                    createHackathonID(name, contact, binding.hackathonUniqueId)
+                } else {
+                    binding.hackathonUniqueId.setText("") // Clear the userID if either field is empty
+                }
+            }
         }
-
-        else if(binding.hackathonDate.text.toString().isNotEmpty()){
-            binding.hackathonName.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable?) {
-                    createHackathonID(binding.hackathonName.text.toString(), binding.hackathonDate.text.toString(), binding.hackathonUniqueId)
-                }
-
-            })
-        }
-
     }
 
     private fun showDateSelector() {
@@ -197,15 +171,18 @@ class CreateHackathon : AppCompatActivity() {
         val userData = database.getReference("Users")
         val hackathonData = database.getReference("Hackathons")
         val hackathonDatabaseID = hackathonData.push().key
+        val uid = currentUser?.uid
         if(currentUser!=null && hackathonDatabaseID!=null){
-            val globalHackathon = hackathonData.child(hackathonDatabaseID).push()
-            val hackathon = Hackathon(name,venue,date,bannerUrl,details,hackID,0,0,0,creator.name,creator.userID)
-            userData.child(currentUser.uid).child("Created Hackathons").child(hackathonDatabaseID).setValue(true)
 
-            globalHackathon.setValue(hackathon).addOnSuccessListener {
+            val hackathon = Hackathon(name,venue,date,bannerUrl,details,hackID,0,0,0,creator.name,creator.userID, hackathonDatabaseID?:"")
+
+
+            hackathonData.child(name).setValue(hackathon).addOnSuccessListener {
                 Toast.makeText(this, "Hackathon Created Successfully!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ScreenMainActivity::class.java)
-                startActivity(intent)
+                if (uid != null) {
+                    hackathonData.child(name).child("creator").child(uid).setValue(true)
+                }
+                Intent(this, ScreenMainActivity::class.java)
                 finish()
             }.addOnFailureListener {
                 Toast.makeText(this, "Error Creating Hackathon: ${it.message}, Please Try Again!", Toast.LENGTH_SHORT).show()
@@ -218,7 +195,7 @@ class CreateHackathon : AppCompatActivity() {
 
     }
 
-    private fun showConfirmationDialog(isUrlEmpty: Boolean, isDetailsEmpty: Boolean){
+    private fun showConfirmationDialog(){
         val name = binding.hackathonName.text.toString().trim()
         val venue = binding.hackathonVenue.text.toString().trim()
         val date = binding.hackathonDate.text.toString().trim()
@@ -228,49 +205,26 @@ class CreateHackathon : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
 
         builder.setTitle("Confirm Action")
-        if(isUrlEmpty && isDetailsEmpty){
-            builder.setMessage("Do You Want to proceed without setting Hackathon Banner and not add any extra details?")
+
+            builder.setMessage("Do You Want to proceed without entering missing fields?")
             builder.setPositiveButton("Yes") { dialog, _ ->
                 //Yes button
-                dialog.dismiss()
                 fetchUserDetailsandSave(name,venue,date,banner,details,hackID)
+                dialog.dismiss()
+
             }
             builder.setNegativeButton("No") { dialog, _ ->
                 //No button
                 dialog.dismiss()
             }
-
-        }
-
-        else if(isUrlEmpty && !isDetailsEmpty){
-            builder.setMessage("Do You Want to proceed without setting Hackathon Banner?")
-            builder.setPositiveButton("Yes") { dialog, _ ->
-                //Yes button
-                dialog.dismiss()
-                fetchUserDetailsandSave(name,venue,date,banner,details,hackID)
-            }
-            builder.setNegativeButton("No") { dialog, _ ->
-                //No button
-                dialog.dismiss()
-            }
-
-        }
-        else if(!isUrlEmpty && !isDetailsEmpty){
-            builder.setMessage("Do You Want to proceed without setting Hackathon Banner?")
-            builder.setPositiveButton("Yes") { dialog, _ ->
-                //Yes button
-                dialog.dismiss()
-                fetchUserDetailsandSave(name,venue,date,banner,details,hackID)
-            }
-            builder.setNegativeButton("No") { dialog, _ ->
-                //No button
-                dialog.dismiss()
-            }
-        }
-
         val dialog = builder.create()
         dialog.show()
+
+
+
+        }
+
+
     }
 
 
-}

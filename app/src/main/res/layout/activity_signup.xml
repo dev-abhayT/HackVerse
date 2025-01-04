@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    style="@style/background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +32,8 @@
             app:endIconMode="clear_text"
             android:layout_marginTop="50dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginEnd="20dp"
+            style="@style/SignInText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEt"
@@ -49,7 +51,8 @@
             app:startIconDrawable="@drawable/password_logo"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            style="@style/SignInText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEt"
@@ -68,7 +71,8 @@
             android:layout_marginTop="30dp"
             app:startIconDrawable="@drawable/password_logo"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginEnd="20dp"
+            style="@style/SignInText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPassword"
@@ -76,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Re-Type Your Password"
                 android:inputType="textPassword"
-                android:paddingStart="60dp" />
+                android:paddingStart="60dp"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -97,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center"
-
+           style="@style/textView"
             android:layout_marginTop="15dp"
             android:textSize="17sp"
             android:text="Already Registered? Sign In!"

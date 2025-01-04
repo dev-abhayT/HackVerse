@@ -9,7 +9,7 @@
         android:orientation="horizontal"
         android:background="#46b1ea">
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView"
+            android:id="@+id/navigation_header_profile_pic"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:civ_border_color="@android:color/white"
@@ -28,19 +28,23 @@
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/navigation_header_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hi User_Name!"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
             <TextView
+                android:id="@+id/navigation_header_user_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="UserEmail@domain.com"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="@color/black"
                 android:textSize="15sp"/>
         </LinearLayout>
     </LinearLayout>

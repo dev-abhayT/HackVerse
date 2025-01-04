@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    style="@style/background"
+    >
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -33,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        style="@style/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -47,7 +49,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             app:startIconDrawable="@drawable/email_logo"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            style="@style/SignInText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEt"
@@ -76,6 +79,7 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:paddingStart="60dp"
+                style="@style/SignInText"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,6 +106,7 @@
             android:gravity="center"
             android:layout_marginTop="15dp"
             android:textSize="17sp"
+            style="@style/textView"
             android:text="Not Registered Yet? Sign Up!"
             android:clickable="true"/>
     </LinearLayout>

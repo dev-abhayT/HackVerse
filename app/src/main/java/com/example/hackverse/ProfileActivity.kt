@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.hackverse.databinding.ActivityProfileBinding
@@ -27,8 +28,8 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
         firebaseAuth = FirebaseAuth.getInstance()
 
         // Set up text watchers
-        binding.nameField.addTextChangedListener(createTextWatcher())
-        binding.contactNumberField.addTextChangedListener(createTextWatcher())
+        binding.nameField.addTextChangedListener(textChangeDetector())
+        binding.contactNumberField.addTextChangedListener(textChangeDetector())
 
         binding.urlField.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -37,10 +38,9 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
                 val url = s.toString()
                 if (url.isNotEmpty()) {
                     Glide.with(this@ProfileActivity)
-                        .load(url)
-                        .placeholder(R.drawable.default_picture).into(binding.profilePicture)
+                        .load(url).error(R.drawable.default_picture).into(binding.profilePicture)
                 } else {
-                    binding.profilePicture.setImageResource(R.drawable.ic_person)
+                    binding.profilePicture.setImageResource(R.drawable.default_picture)
                 }
             }
         })
@@ -55,12 +55,19 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
                 userName.isEmpty() ->
                     Toast.makeText(this, "Name Field Should Not be Empty!", Toast.LENGTH_SHORT).show()
 
-                contact.isEmpty() ->
+                contact.isEmpty() -> {
                     Toast.makeText(this, "Please Provide a Contact Number", Toast.LENGTH_SHORT).show()
 
+                }
+                contact.isNotEmpty() -> {
+                    if(contact.length != 10){
+                        Toast.makeText(this, "Contact Number should be of 10 digits!", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 imgUrl.isEmpty() -> {
-                    Toast.makeText(this, "Profile Picture not updated!", Toast.LENGTH_SHORT).show()
-                    saveProfile(userName, contact, imgUrl, uid)
+                    showConfirmationDialog()
+
+
                 }
 
                 else -> {
@@ -71,7 +78,7 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
         }
     }
 
-    private fun createTextWatcher(): TextWatcher {
+    private fun textChangeDetector(): TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -99,7 +106,7 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
             val email = currentUser.email ?: "Email Not Available!"
-            val userProfile = Users(name, number, imgUrl, userID, email, true)
+            val userProfile = Users(name, number, imgUrl, userID, email)
 
             database.child(currentUser.uid).setValue(userProfile).addOnSuccessListener {
                 Toast.makeText(this, "Profile Created Successfully!", Toast.LENGTH_SHORT).show()
@@ -115,4 +122,30 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
             }
         }
     }
+
+    private fun showConfirmationDialog(){
+        val userName = binding.nameField.text.toString().trim()
+        val contact = binding.contactNumberField.text.toString().trim()
+        val imgUrl = binding.urlField.text.toString()
+        val uid = binding.userID.text.toString()
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Confirm Action")
+        builder.setMessage("Do You Want to proceed without setting Profile Picture?")
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            //Yes button
+
+            dialog.dismiss()
+            saveProfile(userName, contact, imgUrl, uid)
+        }
+        builder.setNegativeButton("No"){ dialog, _ ->
+            //No button
+            dialog.dismiss()
+        }
+        val dial = builder.create()
+        dial.show()
+
+
+    }
+
 }

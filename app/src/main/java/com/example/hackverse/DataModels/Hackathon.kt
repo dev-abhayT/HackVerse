@@ -3,46 +3,50 @@ package com.example.hackverse.DataModels
 import android.os.Parcel
 import android.os.Parcelable
 
-
 data class Hackathon(
-    val name: String = "",
-    val location: String = "",
-    val date: String = "",
-    val bannerUrl: String = "",
-    val details: String = "",
-    val hackID: String = "",
-    val upvotes: Int = 0,
-    val comments: Int = 0,
-    val registrations: Int = 0,
-    val createdByUserName: String ="",
-    val createdByUserID: String ="") : Parcelable {
-    constructor(parcel: Parcel) : this(parcel.readString().toString(),
+    val name: String = "",          // Matches "name"
+    val location: String = "",      // Matches "location"
+    val date: String ?= null,            // Matches "date" (stored as timestamp in Firebase)
+    val bannerUrl: String = "",     // Matches "bannerUrl"
+    val details: String = "",       // Matches "details"
+    val hackID: String = "",        // Matches "hackID"
+    val upvotes: Long = 0L,           // Matches "upvotes"
+    val comments: Long = 0L,          // Matches "comments"
+    val registrations: Long = 0L,     // Matches "registrations"
+    val createdByUserName: String = "",  // Matches "createdByUserName"
+    val createdByUserID: String = "",
+    val hackathonDatabaseID: String = "")// Matches "createdByUserID"
+ : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),                // Changed from readString() to readLong()
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
+        parcel.readLong(),
+        parcel.readLong(),
+        parcel.readLong(),
         parcel.readString().toString(),
         parcel.readString().toString(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readString().toString(),
-        parcel.readString().toString())
+        parcel.readString().toString()
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeString(location)
-        parcel.writeString(date)
+        parcel.writeString(date)            // Changed from writeString() to writeLong()
         parcel.writeString(bannerUrl)
         parcel.writeString(details)
         parcel.writeString(hackID)
-        parcel.writeInt(upvotes)
-        parcel.writeInt(comments)
-        parcel.writeInt(registrations)
+        parcel.writeLong(upvotes)
+        parcel.writeLong(comments)
+        parcel.writeLong(registrations)
         parcel.writeString(createdByUserID)
         parcel.writeString(createdByUserName)
-
-
+        parcel.writeString(hackathonDatabaseID)
     }
+
     override fun describeContents(): Int {
         return 0
     }
@@ -55,4 +59,5 @@ data class Hackathon(
         override fun newArray(size: Int): Array<Hackathon?> {
             return arrayOfNulls(size)
         }
-    }}
+    }
+}
