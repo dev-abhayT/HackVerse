@@ -32,21 +32,21 @@ class Bookmarked : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout manually
+
         val rootView = inflater.inflate(R.layout.fragment_bookmarked, container, false)
 
-        // Find views manually (no View Binding)
+
         recyclerView = rootView.findViewById(R.id.recyclerView_bookmarked_hackathons)
         swipeRefresh = rootView.findViewById(R.id.BookmarkedHackathons_swipeRefresh)
         loading = rootView.findViewById(R.id.bookmarked_hackathons_progress_bar)
-        // Set up the RecyclerView
+
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        // Set up the adapter
+
         hackathonAdapter = HackathonAdapter(requireContext(), hackathonList)
         recyclerView.adapter = hackathonAdapter
 
-        // Load registered hackathons
+
         loadBookmarkedHackathons()
 
         swipeRefresh.setOnRefreshListener {
@@ -66,17 +66,17 @@ class Bookmarked : Fragment() {
             return
         }
 
-        // Reference to the Hackathons node
+
         val hackathonsRef = database.child("Hackathons")
 
         hackathonsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                hackathonList.clear() // Clear the previous data
+                hackathonList.clear()
 
                 for (hackathonSnapshot in snapshot.children) {
                     val hackathon = hackathonSnapshot.getValue(Hackathon::class.java)
 
-                    // Check if the user has registered for this hackathon
+
                     val registrationsNodeRef = hackathonSnapshot.child("bookmarkers")
 
                     if (registrationsNodeRef.hasChild(userId)) {
@@ -84,7 +84,7 @@ class Bookmarked : Fragment() {
                     }
                 }
 
-                // Notify the adapter that the data has changed
+
                 hackathonAdapter.notifyDataSetChanged()
                 loading.visibility=View.GONE
                 recyclerView.visibility=View.VISIBLE

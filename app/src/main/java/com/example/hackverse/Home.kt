@@ -26,10 +26,10 @@ class Home : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize RecyclerView
+
         swipeRefreshLayout=view.findViewById(R.id.hackathon_swipe_refresh)
         loading = view.findViewById(R.id.progressBar)
-        recyclerView = view.findViewById(R.id.hackathon_recycler_view) // Align ID with your XML file
+        recyclerView = view.findViewById(R.id.hackathon_recycler_view)
         addBtn = view.findViewById(R.id.add_button)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         hackathonAdapter = HackathonAdapter(requireContext(), hackathonList)
@@ -37,10 +37,10 @@ class Home : Fragment(R.layout.fragment_home) {
 
 
         hackathonAdapter.onShareClick= { hackathon ->
-            // Create the deep link to the specific hackathon
+
             val deepLink = "hackverse://hackathon/details/${hackathon.hackathonDatabaseID}"
 
-// Format the content for sharing
+
             val shareText = """
     Display your Technical Prowess to the World! 
     Participate in this Hackathon!
@@ -55,21 +55,21 @@ class Home : Fragment(R.layout.fragment_home) {
     $deepLink
 """.trimIndent()
 
-// Create the sharing intent
+
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, shareText)
             }
 
-// Show the share sheet (chooser)
+
             val chooser = Intent.createChooser(shareIntent, "Share Hackathon via")
             startActivity(chooser)
 
         }
-        // Initialize Firebase database reference
+
         database = FirebaseDatabase.getInstance().getReference("Hackathons")
 
-        // Load Hackathons
+
         fetchHackathons()
 
         addBtn.setOnClickListener {
@@ -89,8 +89,8 @@ class Home : Fragment(R.layout.fragment_home) {
 
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                hackathonList.clear() // Clear the list before adding new data
-                for (parentSnapshot in snapshot.children) { // Iterate over the main nodes (e.g., "-OFVbg0N7Z8S1WTmWUBY")
+                hackathonList.clear()
+                for (parentSnapshot in snapshot.children) {
 
                         val hackathon = parentSnapshot.getValue(Hackathon::class.java)
                         if (hackathon != null) {
@@ -98,7 +98,7 @@ class Home : Fragment(R.layout.fragment_home) {
                         }
 
                 }
-                hackathonAdapter.notifyDataSetChanged() // Notify the adapter about data changes
+                hackathonAdapter.notifyDataSetChanged()
                 recyclerView.visibility=View.VISIBLE
                 loading.visibility=View.GONE
             }

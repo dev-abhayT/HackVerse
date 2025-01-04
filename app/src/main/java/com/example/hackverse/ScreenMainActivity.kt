@@ -37,7 +37,7 @@ class ScreenMainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        // Set up the ActionBarDrawerToggle
+
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
             R.string.drawer_open,
@@ -46,14 +46,14 @@ class ScreenMainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        // Load the Home Fragment by default
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, Home())
                 .commit()
         }
 
-        // Handle Navigation Item Clicks
+
         navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.item_home -> {
@@ -89,7 +89,7 @@ class ScreenMainActivity : AppCompatActivity() {
             userDataref = FirebaseDatabase.getInstance().getReference("Users")
             userDataref.child(userid).addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // Convert the snapshot into a Hackathon object
+
                     val users = snapshot.getValue(Users::class.java)
                     if (users != null){
 
@@ -133,12 +133,12 @@ class ScreenMainActivity : AppCompatActivity() {
             .setTitle("Logout")
             .setMessage("Are you sure you want to logout?")
             .setPositiveButton("Yes") { _, _ ->
-                // Clear session or preferences if needed
+
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, SignInActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
-                finish() // Ensure the current activity is closed
+                finish()
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
@@ -147,20 +147,20 @@ class ScreenMainActivity : AppCompatActivity() {
     }
 
     private fun updateNavigationHeader(name: String, email: String, imageUrl: String){
-        val headerView = navigationView.getHeaderView(0) // Access the first header
+        val headerView = navigationView.getHeaderView(0)
         val profileImageView = headerView.findViewById<CircleImageView>(R.id.navigation_header_profile_pic)
         val nameTextView = headerView.findViewById<TextView>(R.id.navigation_header_user_name)
         val emailTextView = headerView.findViewById<TextView>(R.id.navigation_header_user_email)
 
-        // Update name and email
+
         nameTextView.text = "Hi ${name}!"
         emailTextView.text = email
 
-        // Load profile picture using Glide
+
         Glide.with(this)
-            .load(imageUrl) // URL of the image
-            .placeholder(R.drawable.default_picture) // Default image if URL is empty or loading
-            .error(R.drawable.default_picture) // Fallback image if loading fails
+            .load(imageUrl)
+            .placeholder(R.drawable.default_picture)
+            .error(R.drawable.default_picture)
             .into(profileImageView)
     }
 

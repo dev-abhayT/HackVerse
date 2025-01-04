@@ -34,10 +34,10 @@ class ActivityComment : AppCompatActivity() {
         binding.commentRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.commentRecyclerView.adapter = adapter
 
-        val hackathonName = intent.getStringExtra("Hackathon Name") // Replace with actual hackathon name
+        val hackathonName = intent.getStringExtra("Hackathon Name")
 
 
-        // Load comments from database
+
         if (hackathonName != null) {
             loadComments(hackathonName)
             loadHackathonDetails(hackathonName)
@@ -114,7 +114,7 @@ class ActivityComment : AppCompatActivity() {
                             commentUserPfpUrl = userProfilePicUrl
                         )
 
-                        // Save under user's node
+
                         database.child("Comments").child(hackathonName).child(uid).child(commentId).setValue(comment).addOnSuccessListener {
                                 commentsList.add(comment)
                                 adapter.notifyDataSetChanged()
@@ -146,7 +146,7 @@ class ActivityComment : AppCompatActivity() {
         val data = FirebaseDatabase.getInstance().getReference("Hackathons")
         data.child(hackathonName).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                // Convert the snapshot into a Hackathon object
+
                 val hackathon = snapshot.getValue(Hackathon::class.java)
                 if(hackathon != null){
                     binding.commentHackathonNameText.text=hackathon.name

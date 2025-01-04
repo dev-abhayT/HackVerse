@@ -4,23 +4,23 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Hackathon(
-    val name: String = "",          // Matches "name"
-    val location: String = "",      // Matches "location"
-    val date: String ?= null,            // Matches "date" (stored as timestamp in Firebase)
-    val bannerUrl: String = "",     // Matches "bannerUrl"
-    val details: String = "",       // Matches "details"
-    val hackID: String = "",        // Matches "hackID"
-    val upvotes: Long = 0L,           // Matches "upvotes"
-    val comments: Long = 0L,          // Matches "comments"
-    val registrations: Long = 0L,     // Matches "registrations"
-    val createdByUserName: String = "",  // Matches "createdByUserName"
+    val name: String = "",
+    val location: String = "",
+    val date: String ?= null,
+    val bannerUrl: String = "",
+    val details: String = "",
+    val hackID: String = "",
+    val upvotes: Long = 0L,
+    val comments: Long = 0L,
+    val registrations: Long = 0L,
+    val createdByUserName: String = "",
     val createdByUserID: String = "",
-    val hackathonDatabaseID: String = "")// Matches "createdByUserID"
+    val hackathonDatabaseID: String = "")
  : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),
-        parcel.readString().toString(),                // Changed from readString() to readLong()
+        parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -35,7 +35,7 @@ data class Hackathon(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeString(location)
-        parcel.writeString(date)            // Changed from writeString() to writeLong()
+        parcel.writeString(date)
         parcel.writeString(bannerUrl)
         parcel.writeString(details)
         parcel.writeString(hackID)

@@ -31,7 +31,7 @@ class KnowMoreActivity : AppCompatActivity() {
 
             data.child(hackathon_name).addListenerForSingleValueEvent(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // Convert the snapshot into a Hackathon object
+
                     val hackathon = snapshot.getValue(Hackathon::class.java)
                     if(hackathon != null){
                         updateRegisterandUpvoteButton(hackathon_name, binding.knowMoreRegisterButton, binding.knowMoreUpvoteButton)
@@ -48,7 +48,7 @@ class KnowMoreActivity : AppCompatActivity() {
                             val deepLink =
                                 "hackverse://hackathon/details/${hackathon.hackathonDatabaseID}"
 
-// Format the content for sharing
+
                             val shareText = """
     Display your Technical Prowess to the World! 
     Participate in this Hackathon!
@@ -63,13 +63,13 @@ class KnowMoreActivity : AppCompatActivity() {
     $deepLink
 """.trimIndent()
 
-// Create the sharing intent
+
                             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
                                 putExtra(Intent.EXTRA_TEXT, shareText)
                             }
 
-// Show the share sheet (chooser)
+
                             val chooser = Intent.createChooser(shareIntent, "Share Hackathon via")
                             startActivity(chooser)
 
@@ -118,26 +118,26 @@ class KnowMoreActivity : AppCompatActivity() {
         hackathonRef.child(hackathonName).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    // Get the current likes count
+
                     var upvotesCount = snapshot.child("upvotes").getValue(Long::class.java) ?: 0L
 
-                    // Reference to the likes node for this hackathon
+
                     val upvotesNodeRef = hackathonRef.child(hackathonName).child("upvotesNode")
 
                     upvotesNodeRef.child(userId).addListenerForSingleValueEvent(object :
                         ValueEventListener {
-                        override fun onDataChange(likesSnapshot: DataSnapshot) {
-                            if (likesSnapshot.exists()) {
-                                // User has already liked the hackathon; remove the like
+                        override fun onDataChange(upvotesSnapshot: DataSnapshot) {
+                            if (upvotesSnapshot.exists()) {
+
                                 upvoteButton.text="Upvote"
                                 upvotesNodeRef.child(userId).removeValue()
-                                upvotesCount = (upvotesCount - 1).coerceAtLeast(0) // Decrement likes, ensuring it doesn't go below 0
+                                upvotesCount = (upvotesCount - 1).coerceAtLeast(0)
                                 hackathonRef.child(hackathonName).child("upvotes").setValue(upvotesCount)
                             } else {
-                                // User hasn't liked yet; add the like
+
                                 upvoteButton.text="Upvoted"
                                 upvotesNodeRef.child(userId).setValue(true)
-                                upvotesCount += 1 // Increment likes
+                                upvotesCount += 1
                                 hackathonRef.child(hackathonName).child("upvotes").setValue(upvotesCount)
                             }
                         }
@@ -172,28 +172,28 @@ class KnowMoreActivity : AppCompatActivity() {
         hackathonRef.child(hackathonName).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    // Get the current registrations count
+
                     var registrationsCount = snapshot.child("registrations").getValue(Long::class.java) ?: 0L
 
-                    // Reference to the registrations node for this hackathon
+
                     val registrationsNodeRef = hackathonRef.child(hackathonName).child("registrationsNode")
 
                     registrationsNodeRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(registrationSnapshot: DataSnapshot) {
                             if (registrationSnapshot.exists()) {
-                                // User already registered; unregister them
+
                                 registerButton.text="Register"
                                 registerButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_register,0,0,0)
                                 registrationsNodeRef.child(userId).removeValue()
-                                registrationsCount = (registrationsCount - 1).coerceAtLeast(0) // Decrement, ensuring it doesn't go below 0
+                                registrationsCount = (registrationsCount - 1).coerceAtLeast(0)
                                 hackathonRef.child(hackathonName).child("registrations").setValue(registrationsCount)
                                 Toast.makeText(this@KnowMoreActivity, "You have unregistered from $hackathonName", Toast.LENGTH_SHORT).show()
                             } else {
-                                // User not registered; register them
+
                                 registerButton.text="Registered"
                                 registerButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_hackathons,0,0,0)
                                 registrationsNodeRef.child(userId).setValue(true)
-                                registrationsCount += 1 // Increment the count
+                                registrationsCount += 1
                                 hackathonRef.child(hackathonName).child("registrations").setValue(registrationsCount)
                                 Toast.makeText(this@KnowMoreActivity, "You have registered for $hackathonName", Toast.LENGTH_SHORT).show()
                             }
@@ -228,11 +228,11 @@ class KnowMoreActivity : AppCompatActivity() {
         registrationsNodeRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(registrationSnapshot: DataSnapshot) {
                 if (registrationSnapshot.exists()) {
-                    // User already registered; unregister them
+
                     registerButton.text="Registered"
                     registerButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_hackathons,0,0,0)
                 } else {
-                    // User not registered; register them
+
                     registerButton.text="Register"
                     registerButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_register,0,0,0)
                 }
@@ -245,12 +245,12 @@ class KnowMoreActivity : AppCompatActivity() {
 
         upvotesNodeRef.child(userId).addListenerForSingleValueEvent(object :
             ValueEventListener {
-            override fun onDataChange(likesSnapshot: DataSnapshot) {
-                if (likesSnapshot.exists()) {
-                    // User has already liked the hackathon; remove the like
+            override fun onDataChange(upvotesSnapshot: DataSnapshot) {
+                if (upvotesSnapshot.exists()) {
+
                     upvoteButton.text="Upvoted"
                 } else {
-                    // User hasn't liked yet; add the like
+
                     upvoteButton.text="Upvote"
 
                 }

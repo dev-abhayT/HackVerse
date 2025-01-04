@@ -23,11 +23,11 @@ import com.google.firebase.database.ValueEventListener
 
 class Account : Fragment() {
 
-    // Firebase instances
+
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val database by lazy { FirebaseDatabase.getInstance().reference }
 
-    // Views
+
     private lateinit var profilePic: ImageView
     private lateinit var userNameText: TextView
     private lateinit var userIDText: TextView
@@ -44,14 +44,14 @@ class Account : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout
+
         return inflater.inflate(R.layout.fragment_account, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize views
+
         profilePic = view.findViewById(R.id.display_profile_pic)
         userNameText = view.findViewById(R.id.display_userName)
         userIDText = view.findViewById(R.id.display_userID)
@@ -67,7 +67,7 @@ class Account : Fragment() {
 
         setNewButton.visibility=View.GONE
         layout_update_url.visibility=View.GONE
-        // Get the current user's ID
+
         val currentUserID = auth.currentUser?.uid
 
         if (currentUserID != null) {
@@ -95,7 +95,7 @@ class Account : Fragment() {
         val userRef = database.child("Users")
         userRef.child(userID).addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                // Convert the snapshot into a Hackathon object
+
                 val users = snapshot.getValue(Users::class.java)
             if (users != null){
 

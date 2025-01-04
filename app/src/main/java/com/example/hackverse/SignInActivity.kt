@@ -6,9 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isNotEmpty
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -34,6 +32,12 @@ class SignInActivity : AppCompatActivity() {
         val passEt = findViewById<TextInputEditText>(R.id.passwordEt)
         val signInBtn = findViewById<Button>(R.id.gotohome)
         val gotosignup = findViewById<TextView>(R.id.gotosignup)
+        val forgotPassword = findViewById<TextView>(R.id.forgot_password)
+
+        forgotPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+            finish()
+        }
         gotosignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)

@@ -101,7 +101,7 @@ class CreateHackathon : AppCompatActivity() {
                 if (name.isNotEmpty() && contact.isNotEmpty()) {
                     createHackathonID(name, contact, binding.hackathonUniqueId)
                 } else {
-                    binding.hackathonUniqueId.setText("") // Clear the userID if either field is empty
+                    binding.hackathonUniqueId.setText("")
                 }
             }
         }
@@ -143,14 +143,14 @@ class CreateHackathon : AppCompatActivity() {
         val currentUser = firebaseAuth.currentUser
         val userData = database.getReference("Users")
         if (currentUser != null) {
-            // Fetch current user's details
+
             userData.child(currentUser.uid).get().addOnSuccessListener { dataSnapshot ->
                 if (dataSnapshot.exists()) {
-                    // Convert snapshot to user object
+
                     val user = dataSnapshot.getValue(Users::class.java)
 
                     if (user != null) {
-                        // Save hackathon details with creator's information
+
                         saveHackathonDetailsToDatabase(name, venue, date, bannerUrl, details, hackID, user)
                     } else {
                         Toast.makeText(this, "Error: User data not found!", Toast.LENGTH_SHORT).show()

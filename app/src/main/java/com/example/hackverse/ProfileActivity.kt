@@ -27,7 +27,7 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
         database = FirebaseDatabase.getInstance().getReference("Users")
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // Set up text watchers
+
         binding.nameField.addTextChangedListener(textChangeDetector())
         binding.contactNumberField.addTextChangedListener(textChangeDetector())
 
@@ -59,11 +59,7 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
                     Toast.makeText(this, "Please Provide a Contact Number", Toast.LENGTH_SHORT).show()
 
                 }
-                contact.isNotEmpty() -> {
-                    if(contact.length != 10){
-                        Toast.makeText(this, "Contact Number should be of 10 digits!", Toast.LENGTH_SHORT).show()
-                    }
-                }
+
                 imgUrl.isEmpty() -> {
                     showConfirmationDialog()
 
@@ -89,7 +85,7 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
                 if (name.isNotEmpty() && contact.isNotEmpty()) {
                     generateUserID(name, contact, binding.userID)
                 } else {
-                    binding.userID.setText("") // Clear the userID if either field is empty
+                    binding.userID.setText("")
                 }
             }
         }

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.hackverse.DataModels.Hackathon
@@ -22,6 +22,7 @@ class HackathonAdapter(
     private val hackathonList: List<Hackathon>
 ) : RecyclerView.Adapter<HackathonAdapter.HackathonViewHolder>() {
 
+    var onItemLongClick: ((Hackathon) -> Unit)? = null
     var onShareClick: ((Hackathon) -> Unit)? = null
 
     private val database: DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -39,6 +40,7 @@ class HackathonAdapter(
         val shareButton: Button = view.findViewById(R.id.hackathon_share_btn)
         val knowMoreButton: Button = view.findViewById(R.id.hackathon_know_more_button)
         val commentButton: Button = view.findViewById(R.id.hackathon_comment_button)
+        val hackathonCard : CardView = view.findViewById((R.id.hackathon_card))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HackathonViewHolder {
@@ -63,6 +65,13 @@ class HackathonAdapter(
         upvoteAndRegisterButtonUpdater(hackathon.name, holder.upvoteButton, holder.registerButton)
         bookmarkButtonUpdator(hackathon.name, holder.bookmark)
 
+        holder.hackathonCard.setOnLongClickListener {
+
+                onItemLongClick?.invoke(hackathon)
+            true
+
+        }
+
         holder.upvoteButton.setOnClickListener {
             upvoteCountUpdate(hackathon, holder.upvoteButton)
         }
@@ -78,7 +87,7 @@ class HackathonAdapter(
             val deepLink =
                 "hackverse://hackathon/details/${hackathon.hackathonDatabaseID}"
 
-// Format the content for sharing
+
             val shareText = """
     Display your Technical Prowess to the World! 
     Participate in this Hackathon!
@@ -131,7 +140,7 @@ class HackathonAdapter(
     override fun getItemCount(): Int = hackathonList.size
 
     private fun upvoteCountUpdate(hackathon: Hackathon, upvoteButton: Button) {
-        // Reference to the Hackathons node
+
         val hackathonName = hackathon.name
         val hackathonRef = FirebaseDatabase.getInstance().getReference("Hackathons")
         val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -144,26 +153,26 @@ class HackathonAdapter(
         hackathonRef.child(hackathonName).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    // Get the current likes count
+
                     var upvotesCount = snapshot.child("upvotes").getValue(Long::class.java) ?: 0L
 
-                    // Reference to the likes node for this hackathon
+
                     val upvotesNodeRef = hackathonRef.child(hackathonName).child("upvotesNode")
 
                     upvotesNodeRef.child(userId).addListenerForSingleValueEvent(object :
                         ValueEventListener {
-                        override fun onDataChange(likesSnapshot: DataSnapshot) {
-                            if (likesSnapshot.exists()) {
-                                // User has already liked the hackathon; remove the like
+                        override fun onDataChange(upvotesSnapshot: DataSnapshot) {
+                            if (upvotesSnapshot.exists()) {
+
                                 upvoteButton.text="Upvote"
                                 upvotesNodeRef.child(userId).removeValue()
                                 upvotesCount = (upvotesCount - 1).coerceAtLeast(0) // Decrement likes, ensuring it doesn't go below 0
                                 hackathonRef.child(hackathonName).child("upvotes").setValue(upvotesCount)
                             } else {
-                                // User hasn't liked yet; add the like
+
                                 upvoteButton.text="Upvoted"
                                 upvotesNodeRef.child(userId).setValue(true)
-                                upvotesCount += 1 // Increment likes
+                                upvotesCount += 1
                                 hackathonRef.child(hackathonName).child("upvotes").setValue(upvotesCount)
                             }
                         }
@@ -184,7 +193,7 @@ class HackathonAdapter(
     }
 
     private fun registerClick(hackathon:Hackathon, registerButton: Button) {
-        // Reference to the Hackathons node
+
         val hackathonName = hackathon.name
         val hackathonRef = FirebaseDatabase.getInstance().getReference("Hackathons")
         val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -197,10 +206,10 @@ class HackathonAdapter(
         hackathonRef.child(hackathonName).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    // Get the current registrations count
+
                     var registrationsCount = snapshot.child("registrations").getValue(Long::class.java) ?: 0L
 
-                    // Reference to the registrations node for this hackathon
+                    
                     val registrationsNodeRef = hackathonRef.child(hackathonName).child("registrationsNode")
 
                     registrationsNodeRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -210,7 +219,7 @@ class HackathonAdapter(
                                 registerButton.text="Register"
                                 registerButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_register,0,0,0)
                                 registrationsNodeRef.child(userId).removeValue()
-                                registrationsCount = (registrationsCount - 1).coerceAtLeast(0) // Decrement, ensuring it doesn't go below 0
+                                registrationsCount = (registrationsCount - 1).coerceAtLeast(0)
                                 hackathonRef.child(hackathonName).child("registrations").setValue(registrationsCount)
                                 Toast.makeText(context, "You have unregistered from $hackathonName", Toast.LENGTH_SHORT).show()
                             } else {
@@ -218,7 +227,7 @@ class HackathonAdapter(
                                 registerButton.text="Registered"
                                 registerButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_hackathons,0,0,0)
                                 registrationsNodeRef.child(userId).setValue(true)
-                                registrationsCount += 1 // Increment the count
+                                registrationsCount += 1
                                 hackathonRef.child(hackathonName).child("registrations").setValue(registrationsCount)
                                 Toast.makeText(context, "You have registered for $hackathonName", Toast.LENGTH_SHORT).show()
                             }
@@ -270,12 +279,12 @@ class HackathonAdapter(
 
         upvotesNodeRef.child(userId).addListenerForSingleValueEvent(object :
             ValueEventListener {
-            override fun onDataChange(likesSnapshot: DataSnapshot) {
-                if (likesSnapshot.exists()) {
-                    // User has already liked the hackathon; remove the like
+            override fun onDataChange(upvotesSnapshot: DataSnapshot) {
+                if (upvotesSnapshot.exists()) {
+
                     upvoteButton.text="Upvoted"
                 } else {
-                    // User hasn't liked yet; add the like
+
                     upvoteButton.text="Upvote"
 
                 }
@@ -316,7 +325,7 @@ class HackathonAdapter(
                 if (bookmarkSnapshot.exists()) {
                     bookmarkButton.setImageResource(R.drawable.ic_filled_bookmark)
                 } else {
-                    // User not registered; register them
+
                     bookmarkButton.setImageResource(R.drawable.ic_bookmark)
 
                 }
