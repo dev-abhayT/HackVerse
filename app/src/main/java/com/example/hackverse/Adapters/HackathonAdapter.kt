@@ -209,7 +209,7 @@ class HackathonAdapter(
 
                     var registrationsCount = snapshot.child("registrations").getValue(Long::class.java) ?: 0L
 
-                    
+
                     val registrationsNodeRef = hackathonRef.child(hackathonName).child("registrationsNode")
 
                     registrationsNodeRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {

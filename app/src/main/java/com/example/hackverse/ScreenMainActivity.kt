@@ -105,7 +105,6 @@ class ScreenMainActivity : AppCompatActivity() {
                     println("Error fetching hackathon: ${error.message}")
                 }
 
-
             })
         }
 

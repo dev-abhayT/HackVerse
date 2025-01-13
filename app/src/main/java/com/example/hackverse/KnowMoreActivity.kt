@@ -133,12 +133,14 @@ class KnowMoreActivity : AppCompatActivity() {
                                 upvotesNodeRef.child(userId).removeValue()
                                 upvotesCount = (upvotesCount - 1).coerceAtLeast(0)
                                 hackathonRef.child(hackathonName).child("upvotes").setValue(upvotesCount)
+                                binding.knowMoreUpvotes.text="${upvotesCount} UPVOTES"
                             } else {
 
                                 upvoteButton.text="Upvoted"
                                 upvotesNodeRef.child(userId).setValue(true)
                                 upvotesCount += 1
                                 hackathonRef.child(hackathonName).child("upvotes").setValue(upvotesCount)
+                                binding.knowMoreUpvotes.text="${upvotesCount} UPVOTES"
                             }
                         }
 
@@ -187,6 +189,7 @@ class KnowMoreActivity : AppCompatActivity() {
                                 registrationsNodeRef.child(userId).removeValue()
                                 registrationsCount = (registrationsCount - 1).coerceAtLeast(0)
                                 hackathonRef.child(hackathonName).child("registrations").setValue(registrationsCount)
+                                binding.knowMoreRegistrationsNumber.text="Registrations: ${registrationsCount}"
                                 Toast.makeText(this@KnowMoreActivity, "You have unregistered from $hackathonName", Toast.LENGTH_SHORT).show()
                             } else {
 
@@ -195,6 +198,7 @@ class KnowMoreActivity : AppCompatActivity() {
                                 registrationsNodeRef.child(userId).setValue(true)
                                 registrationsCount += 1
                                 hackathonRef.child(hackathonName).child("registrations").setValue(registrationsCount)
+                                binding.knowMoreRegistrationsNumber.text="Registrations: ${registrationsCount}"
                                 Toast.makeText(this@KnowMoreActivity, "You have registered for $hackathonName", Toast.LENGTH_SHORT).show()
                             }
                         }
