@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -68,9 +69,17 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
 
                 }
 
+
+
                 else -> {
-                    Toast.makeText(this, "Profile created successfully!", Toast.LENGTH_SHORT).show()
-                    saveProfile(userName, contact, imgUrl, uid)
+                    if(contact.length != 10){
+                            Toast.makeText(this, "Contact Number should be of 10 digits!", Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        Toast.makeText(this, "Profile created successfully!", Toast.LENGTH_SHORT).show()
+                        saveProfile(userName, contact, imgUrl, uid)
+                    }
+
                 }
             }
         }
@@ -93,7 +102,7 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
         }
     }
 
-    private fun generateUserID(name: String, number: String, userID: TextInputEditText) {
+    private fun generateUserID(name: String, number: String, userID: TextView) {
         val initials = name.split(" ").joinToString("") { it.take(2).uppercase() }
         val contact = number.take(5)
         val uID = "$initials$contact"
@@ -145,5 +154,7 @@ class ProfileActivity : AppCompatActivity() {private lateinit var database: Data
 
 
     }
+
+   
 
 }

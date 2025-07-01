@@ -194,23 +194,20 @@
 
                 </ScrollView>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:id="@+id/hackathon_unique_id"
                     android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_userid"
+                    android:text="   Unique ID for Hackathon"
+                    android:background="@drawable/textview_border"
+                    android:padding="12dp"
+                    android:textSize="16sp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="5dp"
-                    style="@style/SignInText"
-                    app:startIconDrawable="@drawable/ic_userid">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/hackathon_unique_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Unique ID for your Hackathon"
-                        android:paddingStart="50dp"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="5dp"
+                    />
 
                 <Button
                     android:id="@+id/create_hackathon"

@@ -56,14 +56,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(platform("com.google.firebase:firebase-bom:32.0.0"))
+    implementation(libs.androidx.appcompat.v161)
+    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     //Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
-    implementation("com.google.firebase:firebase-database:20.2.2")
+    implementation("com.google.firebase:firebase-database:21.0.0")
 
 
 

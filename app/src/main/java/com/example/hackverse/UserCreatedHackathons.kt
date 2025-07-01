@@ -120,8 +120,10 @@ class UserCreatedHackathons : Fragment() {
     private fun delete(hackathonName : String){
         database.child("Hackathons").child(hackathonName).removeValue().addOnSuccessListener {
             Toast.makeText(requireContext(), "${hackathonName} was deleted successfully!", Toast.LENGTH_SHORT).show()
+            loadCreatedHackathons()
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "${hackathonName} couldn't be deleted, please try again!", Toast.LENGTH_SHORT).show()
         }
+
     }
 }

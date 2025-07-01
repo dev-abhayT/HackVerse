@@ -1,6 +1,7 @@
 package com.example.hackverse
 
 import Users
+import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.hackverse.DataModels.Hackathon
@@ -21,7 +23,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class Account : Fragment() {
+class Account : androidx.fragment.app.Fragment() {
 
 
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }

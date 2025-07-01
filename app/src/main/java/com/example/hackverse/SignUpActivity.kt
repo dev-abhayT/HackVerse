@@ -38,7 +38,7 @@ class SignUpActivity : AppCompatActivity() {
             if (email != null && pass != null && confirmPass !=null) {
                 if(email.isNotEmpty() && pass.isNotEmpty() && confirmPass.isNotEmpty()) {
                     if(pass == confirmPass){
-                        if (email != null  && pass !=null) {
+                        if (email != null && pass !=null) {
                             firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                                 if(it.isSuccessful) {
                                     Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show()

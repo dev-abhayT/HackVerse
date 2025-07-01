@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.DatePicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -132,7 +133,7 @@ class CreateHackathon : AppCompatActivity() {
 
     }
 
-    private fun createHackathonID(name: String, date: String, hackID : TextInputEditText){
+    private fun createHackathonID(name: String, date: String, hackID : TextView){
         val startWord = name.split(" ").joinToString("").uppercase()
         val day = date.take(2)
         val id = "$startWord$day"
